@@ -48,7 +48,7 @@ class Phonebook:
                 contact.name = new_name
                 contact.phone_number = new_phone_number
                 self.save_contacts()
-                print("Контакт успешно отредактирован.")
+                # print("Контакт успешно отредактирован.")
                 return True
         return False
 
