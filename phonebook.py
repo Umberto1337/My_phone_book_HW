@@ -1,10 +1,11 @@
 class Contact:
-    def __init__(self, name, phone_number):
+    def __init__(self, name, phone_number, comment):
         self.name = name
         self.phone_number = phone_number
+        self.comment = comment
 
     def __str__(self):
-        return f"Имя: {self.name}\nНомер телефона: {self.phone_number}"
+        return f"Имя: {self.name}\nНомер телефона: {self.phone_number}\nКомментарий: {self.comment}"
 
 
 class Phonebook:
@@ -27,7 +28,7 @@ class Phonebook:
     def search_contact(self, keyword):
         found_contacts = []
         for contact in self.contacts:
-            if keyword.lower() in contact.name.lower():
+            if keyword.lower() in contact.name.lower() or keyword.lower() in contact.comment.lower():
                 found_contacts.append(contact)
         return found_contacts
 
@@ -45,8 +46,10 @@ class Phonebook:
                 print(contact)
                 new_name = input("Введите новое имя: ")
                 new_phone_number = input("Введите новый номер телефона: ")
+                new_comment = input("Введите новый комментарий: ")
                 contact.name = new_name
                 contact.phone_number = new_phone_number
+                contact.comment = new_comment
                 self.save_contacts()
                 # print("Контакт успешно отредактирован.")
                 return True
@@ -55,14 +58,17 @@ class Phonebook:
     def save_contacts(self):
         with open(self.file_path, "w", encoding="utf-8") as file:
             for contact in self.contacts:
-                file.write(f"{contact.name},{contact.phone_number}\n")
+                file.write(f"{contact.name},{contact.phone_number},{contact.comment}\n")
 
     def load_contacts(self):
+        self.contacts = []
         try:
             with open(self.file_path, "r", encoding="utf-8") as file:
-                for line in file:
-                    name, phone_number = line.strip().split(",")
-                    contact = Contact(name, phone_number)
-                    self.contacts.append(contact)
+                lines = file.readlines()
+                for line in lines:
+                    data = line.strip().split(",")
+                    if len(data) == 3:  
+                        contact = Contact(data[0], data[1], data[2])
+                        self.contacts.append(contact)
         except FileNotFoundError:
             pass

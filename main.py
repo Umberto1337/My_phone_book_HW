@@ -19,7 +19,8 @@ def run_phonebook():
         if choice == "1":
             name = input("Введите имя: ")
             phone_number = input("Введите номер телефона: ")
-            contact = Contact(name, phone_number)
+            comment = input("Добавить комментарий: ")
+            contact = Contact(name, phone_number, comment)
             phonebook.add_contact(contact)
             print("Контакт добавлен.")
         elif choice == "2":
@@ -40,7 +41,7 @@ def run_phonebook():
         elif choice == "4":
             phonebook.display_contacts()
         elif choice == "5":
-            name = input("Введите имя контакта для редактирования: ")
+            name = input("Поиск контакта для редактирования: ")
             if phonebook.edit_contact(name):
                 print("Контакт успешно отредактирован.")
             else:
