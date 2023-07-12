@@ -18,7 +18,15 @@ def run_phonebook():
 
         if choice == "1":
             name = input("Введите имя: ")
-            phone_number = input("Введите номер телефона: ")
+            while True:
+                phone_number = input("Введите номер телефона: ")
+                if phone_number.startswith('8'):
+                    phone_number = '+7' + phone_number[1:]
+                if len(phone_number) == 12 and phone_number.startswith('+7'):
+                    print("Номер корректный.")
+                    break
+                else:
+                    print("Неправильный формат номера телефона. Попробуйте ещё.")
             comment = input("Добавить комментарий: ")
             contact = Contact(name, phone_number, comment)
             phonebook.add_contact(contact)

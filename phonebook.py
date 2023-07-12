@@ -15,7 +15,7 @@ class Phonebook:
 
     def add_contact(self, contact):
         self.contacts.append(contact)
-        self.save_contacts()
+        self.save_contacts()    
 
     def delete_contact(self, name):
         for contact in self.contacts:
